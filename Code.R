@@ -20,6 +20,7 @@ str(training_data)
 training_data$default <- ifelse(test=training_data$default == "0,00", yes="non-defaulted", no="defaulted")
 training_data$default <- as.factor(training_data$default)
 
+
 #i)
 
 library(ROSE)
@@ -65,5 +66,6 @@ oob.values
 
 rf_model1 <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11 , data = training_data, proximity=TRUE,ntree=100)
 rf_model1
+
 
 

@@ -4,21 +4,23 @@
 test_data <- read.csv("data/Test_accomodation and food service activities.csv", header = TRUE, sep = ";")
 #standardizing data with scale function 
 test_data[5:48]<-scale(as.numeric(unlist(test_data[5:48])))
-View(test_data)
+
 
 test_data$default <- ifelse(test_data$default == "0,00", yes="non-defaulted", no="defaulted")
 test_data$default <- as.factor(test_data$default)
 str(test_data)
+View(test_data)
 
 #test dataframe
 training_data <- read.csv("data/Train_accomodation and food service activities.csv", header = TRUE, sep = ";")
 #standardizing data with scale function ki centrira podatke in jih s tem standardizira 
 training_data[5:48]<-scale(as.numeric(unlist(training_data[5:48])))
-View(training_data)
-str(training_data)
+
 
 training_data$default <- ifelse(test=training_data$default == "0,00", yes="non-defaulted", no="defaulted")
 training_data$default <- as.factor(training_data$default)
+str(training_data)
+View(training_data)
 
 #i)
 
@@ -42,8 +44,9 @@ pca3d(as.matrix(pca$scores), group=gr)
 library(randomForest)
 library(ggplot2)
 library(cowplot)
+set.seed(44)
 
-rf_model1 <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11 , data = training_data, proximity=TRUE)
+rf_model1 <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11+training_data$f12+training_data$f13+training_data$f14+training_data$f15+training_data$f16+training_data$f17+training_data$f18+training_data$f19+training_data$f21+training_data$f22+training_data$f23+training_data$f24+training_data$f25+training_data$f26+training_data$f27+training_data$f28+training_data$f29+training_data$f30+training_data$f31+training_data$f32+training_data$f33+training_data$f35+training_data$f36+training_data$f37+training_data$f38+training_data$f39+training_data$f40+training_data$f41+training_data$f42+training_data$f43+training_data$f44+training_data$f46+training_data$f47 , data = training_data, proximity=TRUE)
 rf_model1
 
 oob.error.data <- data.frame(
@@ -58,12 +61,14 @@ ggplot(data=oob.error.data, aes(x=Trees, y=Error)) +
 
 oob.values <- vector(length=10)
 for(i in 1:10) {
-  temp.model <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11 , data = training_data, mtry=i, ntree=500)
+  temp.model <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11+training_data$f12+training_data$f13+training_data$f14+training_data$f15+training_data$f16+training_data$f17+training_data$f18+training_data$f19+training_data$f21+training_data$f22+training_data$f23+training_data$f24+training_data$f25+training_data$f26+training_data$f27+training_data$f28+training_data$f29+training_data$f30+training_data$f31+training_data$f32+training_data$f33+training_data$f35+training_data$f36+training_data$f37+training_data$f38+training_data$f39+training_data$f40+training_data$f41+training_data$f42+training_data$f43+training_data$f44+training_data$f46+training_data$f47 , data = training_data, mtry=i, ntree=500)
   oob.values[i] <- temp.model$err.rate[nrow(temp.model$err.rate),1]
 }
 oob.values
 
-rf_model1 <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11 , data = training_data, proximity=TRUE,ntree=100)
+rf_model1 <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11+training_data$f12+training_data$f13+training_data$f14+training_data$f15+training_data$f16+training_data$f17+training_data$f18+training_data$f19+training_data$f21+training_data$f22+training_data$f23+training_data$f24+training_data$f25+training_data$f26+training_data$f27+training_data$f28+training_data$f29+training_data$f30+training_data$f31+training_data$f32+training_data$f33+training_data$f35+training_data$f36+training_data$f37+training_data$f38+training_data$f39+training_data$f40+training_data$f41+training_data$f42+training_data$f43+training_data$f44+training_data$f46+training_data$f47 , data = training_data, proximity=TRUE, ntree=300)
 rf_model1
+
+top_factors<-rf_model1$importance[order(rf_model1$importance[,1],decreasing=TRUE),]
 
 

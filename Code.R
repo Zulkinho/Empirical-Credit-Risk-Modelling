@@ -17,10 +17,19 @@ training_data <- read.csv("data/Train_accomodation and food service activities.c
 training_data[5:48]<-scale(as.numeric(unlist(training_data[5:48])))
 
 
+
 training_data$default <- ifelse(test=training_data$default == "0,00", yes="non-defaulted", no="defaulted")
 training_data$default <- as.factor(training_data$default)
 str(training_data)
 View(training_data)
+
+View(training_data)
+str(training_data)
+
+training_data$default <- ifelse(test=training_data$default == "0,00", yes="non-defaulted", no="defaulted")
+training_data$default <- as.factor(training_data$default)
+
+
 
 #i)
 
@@ -69,6 +78,8 @@ oob.values
 rf_model1 <- randomForest(training_data$default ~ training_data$f01+ training_data$f02+training_data$f03+training_data$f04+training_data$f05+training_data$f06+training_data$f07+training_data$f08+training_data$f09+training_data$f10+training_data$f11+training_data$f12+training_data$f13+training_data$f14+training_data$f15+training_data$f16+training_data$f17+training_data$f18+training_data$f19+training_data$f21+training_data$f22+training_data$f23+training_data$f24+training_data$f25+training_data$f26+training_data$f27+training_data$f28+training_data$f29+training_data$f30+training_data$f31+training_data$f32+training_data$f33+training_data$f35+training_data$f36+training_data$f37+training_data$f38+training_data$f39+training_data$f40+training_data$f41+training_data$f42+training_data$f43+training_data$f44+training_data$f46+training_data$f47 , data = training_data, proximity=TRUE, ntree=300)
 rf_model1
 
+
 top_factors<-rf_model1$importance[order(rf_model1$importance[,1],decreasing=TRUE),]
+
 
 

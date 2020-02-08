@@ -73,6 +73,7 @@ top_factors
 #iii)
 
 #making data from top 10 factros plus defaulted class
+
 top_factors_data<- training_data[,c("f07", "f32", "f08", "f16", "f44", "f36", "f31", "f43", "f47", "f29","default")]
 str(top_factors_data)
 View(top_factors_data)
@@ -117,3 +118,6 @@ stat_data_non_defaulted
 summary((top_factors_data_non_defaulted))
 
 boxplot(top_factors_data_non_defaulted[1:10], horizontal=TRUE, main="Top 10 factors distribution NON-DEFAULTED")
+
+
+

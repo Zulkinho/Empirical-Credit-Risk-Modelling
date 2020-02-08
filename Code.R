@@ -73,6 +73,7 @@ top_factors
 #iii)
 
 #making data from top 10 factros plus defaulted class
+
 top_factors_data<- training_data[,c("f07", "f32", "f08", "f16", "f44", "f36", "f31", "f43", "f47", "f29","default")]
 str(top_factors_data)
 View(top_factors_data)
@@ -117,3 +118,57 @@ stat_data_non_defaulted
 summary((top_factors_data_non_defaulted))
 
 boxplot(top_factors_data_non_defaulted[1:10], horizontal=TRUE, main="Top 10 factors distribution NON-DEFAULTED")
+
+#iv)
+
+log_model<-glm(training_data$default ~ training_data$f09 + training_data$f33 + training_data$f23 + training_data$f17 + training_data$f10 ,data=training_data,family="binomial")
+summary(log_model)
+
+fitted.results <- predict(log_model,newdata=subset(test_data,select=c(49,13,36,26,21,14)),type="response")
+
+
+library(ROCR)
+p <- predict(log_model, newdata=subset(test_data,select=c(49,13,36,26,21,14)), type="response")
+pr <- prediction(p, training_data$default)
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+
+auc <- performance(pr, measure = "auc")
+auc <- auc@y.values[[1]]
+auc
+
+#v)
+log_model1<-glm(training_data$default ~ training_data$f47+ training_data$f22 + training_data$f17 + training_data$f26+ training_data$f27 + training_data$f02+ training_data$f42+ training_data$f11+ training_data$f46 ,data=training_data,family="binomial")
+summary(log_model1)
+
+fitted.results <- predict(log_model1,newdata=subset(test_data,select=c(49,48,25,21,29,30,6,44,15,47)),type="response")
+
+
+
+p <- predict(log_model1, newdata=subset(test_data,select=c(49,48,25,21,29,30,6,44,15,47)), type="response")
+pr <- prediction(p, training_data$default)
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+
+auc <- performance(pr, measure = "auc")
+auc <- auc@y.values[[1]]
+auc
+
+#v)
+log_model2<-glm(training_data$default ~ training_data$f07+ training_data$f32 + training_data$f08 + training_data$f16+ training_data$f44 + training_data$f36+ training_data$f31+ training_data$f43+ training_data$f47+ training_data$f29 ,data=training_data,family="binomial")
+summary(log_model2)
+
+fitted.results <- predict(log_model2,newdata=subset(test_data,select=c(49,11,35,12,20,46,38,34,45,48,32)),type="response")
+
+
+
+p <- predict(log_model2, newdata=subset(test_data,select=c(49,11,35,12,20,46,38,34,45,48,32)), type="response")
+pr <- prediction(p, training_data$default)
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+
+auc <- performance(pr, measure = "auc")
+auc <- auc@y.values[[1]]
+auc
+
+######################################################################################################################################################################################################################################################################################

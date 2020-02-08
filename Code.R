@@ -71,10 +71,13 @@ top_factors<-rf_model1$importance[order(rf_model1$importance[,1],decreasing=TRUE
 top_factors
 
 #iii)
+
+#making data from top 10 factros plus defaulted class
 top_factors_data<- training_data[,c("f07", "f32", "f08", "f16", "f44", "f36", "f31", "f43", "f47", "f29","default")]
 str(top_factors_data)
 View(top_factors_data)
 
+#descriptive statistics for all top 10 fators+ boxplot
 library(pastecs)
 stat_data<-stat.desc(top_factors_data[,c(1:10)])
 stat_data<-round(stat_data, 2)
@@ -87,4 +90,30 @@ summary((top_factors_data))
 # vioplot(top_factors_data$default, horizontal=TRUE, main="Defaulter vs non-defaulted class distribution")
 # hist(top_factors_data$default, breaks=4)
 
+boxplot(top_factors_data[1:10], horizontal=TRUE, main="Top 10 factors distribution")
 
+#descriptive statistics for all top 10 fators+ boxplot only defaulted class
+
+top_factors_data_defaulted<-top_factors_data[top_factors_data$default== "defaulted",]
+View(top_factors_data_defaulted)
+
+stat_data_defaulted<-stat.desc(top_factors_data_defaulted[,c(1:10)])
+stat_data_defaulted<-round(stat_data_defaulted, 2)
+stat_data_defaulted
+
+summary((top_factors_data_defaulted))
+
+boxplot(top_factors_data_defaulted[1:10], horizontal=TRUE, main="Top 10 factors distribution DEFAULTED")
+
+#descriptive statistics for all top 10 fators+ boxplot only non-defaulted class
+
+top_factors_data_non_defaulted<-top_factors_data[top_factors_data$default== "non-defaulted",]
+View(top_factors_data_non_defaulted)
+
+stat_data_non_defaulted<-stat.desc(top_factors_data_non_defaulted[,c(1:10)])
+stat_data_non_defaulted<-round(stat_data_non_defaulted, 2)
+stat_data_non_defaulted
+
+summary((top_factors_data_non_defaulted))
+
+boxplot(top_factors_data_non_defaulted[1:10], horizontal=TRUE, main="Top 10 factors distribution NON-DEFAULTED")

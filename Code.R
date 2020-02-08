@@ -71,6 +71,7 @@ top_factors<-rf_model1$importance[order(rf_model1$importance[,1],decreasing=TRUE
 top_factors
 
 #iii)
+
 top_factors_data<- training_data[,c("f07", "f32", "f08", "f16", "f44", "f36", "f31", "f43", "f47", "f29","default")]
 str(top_factors_data)
 View(top_factors_data)
@@ -86,5 +87,6 @@ summary((top_factors_data))
 # library(vioplot)
 # vioplot(top_factors_data$default, horizontal=TRUE, main="Defaulter vs non-defaulted class distribution")
 # hist(top_factors_data$default, breaks=4)
+
 
 

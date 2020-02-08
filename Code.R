@@ -119,6 +119,7 @@ summary((top_factors_data_non_defaulted))
 
 boxplot(top_factors_data_non_defaulted[1:10], horizontal=TRUE, main="Top 10 factors distribution NON-DEFAULTED")
 
+
 #iv)
 
 log_model<-glm(training_data$default ~ training_data$f09 + training_data$f33 + training_data$f23 + training_data$f17 + training_data$f10 ,data=training_data,family="binomial")
@@ -144,7 +145,6 @@ summary(log_model1)
 fitted.results <- predict(log_model1,newdata=subset(test_data,select=c(49,48,25,21,29,30,6,44,15,47)),type="response")
 
 
-
 p <- predict(log_model1, newdata=subset(test_data,select=c(49,48,25,21,29,30,6,44,15,47)), type="response")
 pr <- prediction(p, training_data$default)
 prf <- performance(pr, measure = "tpr", x.measure = "fpr")
@@ -159,8 +159,6 @@ log_model2<-glm(training_data$default ~ training_data$f07+ training_data$f32 + t
 summary(log_model2)
 
 fitted.results <- predict(log_model2,newdata=subset(test_data,select=c(49,11,35,12,20,46,38,34,45,48,32)),type="response")
-
-
 
 p <- predict(log_model2, newdata=subset(test_data,select=c(49,11,35,12,20,46,38,34,45,48,32)), type="response")
 pr <- prediction(p, training_data$default)
